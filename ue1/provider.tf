@@ -1,7 +1,3 @@
-variable "region" {}
-variable "profile" {}
-
 provider "aws" {
-  region  = "${var.region}"
-  profile = "${var.profile}"
+  region  = "us-east-1"
 }
