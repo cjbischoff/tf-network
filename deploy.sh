@@ -4,10 +4,10 @@ set -o errexit -o nounset
 
 cd ue1
 
-terraform init
+terraform init -input=false
 
 terraform validate
 
 terraform plan
 
-terraform apply
+terraform apply -input=false -auto-approve
