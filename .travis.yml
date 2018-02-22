@@ -1,32 +1,26 @@
-# notifications
 notifications:
+  email: false
   slack:
-    secure: JfVg2wYlWLYxR2EEw5wbuexbflUgPY7y8RvvQPF8FZ0Od05RdUu4levBNde77xQOVz1CogWYThJREo5rKOmmp0GOTSjsdHu4C+fW2iKPSsGPHhWnAUuQDuq+9UMKWjpRN9x8sJBGoDsfV3lKozd/ciBIlqi49I8FHH7AID+1Lfd1KJt2Q7fDJhLivEAJCAZe4VZpuZzZgA1YUYmEMop3f2g5IzrMAm9+1hv5/xliCzs/sxBg0BEMzafaQIU5o80GfZNTlxwidT5VXwlteOH7t0PBJZx6fhkXOSIFD3RVsxIK3sRlCTZozq8bp1WdHx0uxkAkiKTVWVGjge+NK0fq5OTHROVFagV968khmtAfvCWOcD+v9xDthMG2TNQJQRny2PtMitfJKDOrpIbDk6f5tHwxBI43BAL7isIjiByJn8L0WaG3yibP6xg/5sLXKfanvz+HbfvxuuQYLpYwL1/DQ2Z9nsZT11GNPrA1N2LvWo11BpPSxsTQuvtXp8fTWWMxnu1vJMWM36mL66LG1XBr3/rCSbPDnu8ct3GMH9/Y8OIeJRieVEEfdvTTPRHDPa9lqiNxWaZ9mV1S53CuHgDDApgL6t30UxDIZuP7xGsTcqbbFSlwYLJNPtCdflkbcEcxMifAtzC6WyOGLT3tnXmAwOME7MnPYnrt0pCqixWd1Q8=
-    on_success: change
-    on_failure: always
-    on_pull_requests: false
+    rooms:
+    - secure: KkBXgsbOwH7WXNB6zAaJdHRWEWs5LAI3d/+r6HQBSo0IdNlAKn0/DLgbjsvxmkMZMDF4/owWkFQ4T54Y3znahn9RjQddGrO0isaecOxxk4s26k7O9KAUiNbwn+w2kNIfYXApKlCCYB8pWwccybTxsJL/DY16aJq1ua0xAJoCSmmKMS1OJ/enMCB/fMEzqBug+VSEmrySNBpzRq7uQ2xFiQMf01WEjn5nF1YvYqknlW62xmnxhXXivXnhWm4ecZM38N3THQeW+fEGSQ/wsrR90pO8dTcien0hf0GO7TwcmUY1FyfQlwt1897RQ7ZWwr7GaBDFHgpQC8JPGmmznK9/bu6Z46j6z7FToyB+Llj9608Pm4nbmQN4mlcmQb4EDmr92sRBOm5InBe9JV1wh+ZSd20qJ/fy4CJUw73zB6nNDln5x/xlIGo1Jbc9P/26NOJqDiE13ejPNnGVEV9G148Zeu/260dBuxAql9qq+5Yh8V75hqJLpf5+aGPBq902OtoJ6q8p7JPYfMtJA8ReO6fEx1+O0piLgUF8B6bczQ4f5p8KsLXapI0S3byEVrgU5yoOX7k73LlG6D9puDQej/lzZJIq0rNO8KWT/b9dx/zxB+BEL/fk6SL9RI8asSYEPawJgLno70tFhg0hRaM9wGEpjoat0K/W5SdvEMXdemyTqd8=
+    on_success: change # default: always
+    on_failure: always # default: always
 
 language: generic
-
-# establish environment variables
 env:
   global:
-    - access_key_id: $AWS_ACCESS_KEY_ID
-    - secret_access_key: $AWS_SECRET_ACCESS_KEY
-
-
-# install terraform
+  - access_key_id: "$AWS_ACCESS_KEY_ID"
+  - secret_access_key: "$AWS_SECRET_ACCESS_KEY"
 before_deploy:
-  - curl -fSL "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip" -o terraform.zip
-  - sudo unzip terraform.zip -d /opt/terraform
-  - sudo ln -s /opt/terraform/terraform /usr/bin/terraform
-  - rm -f terraform.zip
-
-# terraform apply
+- curl -fSL "https://releases.hashicorp.com/terraform/0.11.3/terraform_0.11.3_linux_amd64.zip"
+  -o terraform.zip
+- sudo unzip terraform.zip -d /opt/terraform
+- sudo ln -s /opt/terraform/terraform /usr/bin/terraform
+- rm -f terraform.zip
 deploy:
-  - provider: script
-    skip_cleanup: true
-    script: "./deploy.sh"
-    on:
-      repo: cjbischoff/tf-network
-      branch: master
+- provider: script
+  skip_cleanup: true
+  script: "./deploy.sh"
+  on:
+    repo: cjbischoff/tf-network
+    branch: master
